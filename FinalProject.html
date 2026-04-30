@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LOCATHINGS – The Lost and Found Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ════════════════ SPLASH SCREEN ════════════════ -->
+<div id="splash" class="page active bg-mesh">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:40px">
+    <div class="splash-logo">
+      <svg width="310" height="330" viewBox="0 0 110 130" fill="none">
+        <image href="localogo.svg" width="100%" height="100%" alt="LOCATHINGS Logo"/>
+      </svg>
+    </div>
+    <div class="splash-title">LOCATHINGS</div>
+    <div class="splash-sub">"The Lost and Found Web" – Campus Digital Lost and Found Directory</div>
+    <div class="splash-welcome">Welcome</div>
+    <button class="splash-btn" onclick="goTo('auth')">CONTINUE</button>
+  </div>
+</div>
+
+<!-- ════════════════ AUTH PAGE ════════════════ -->
+<div id="auth" class="page">
+  <div class="auth-left">
+    <div class="gordon-seal"><img src="logo.png" alt="Gordon Seal"/></div>
+    <div>
+      <div style="font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:4px;text-align:center">GORDON COLLEGE</div>
+      <h2>Welcome Back</h2>
+      <p>Sign in to your account</p>
+    </div>
+  </div>
+  <div class="auth-right">
+    <!-- LOGIN FORM -->
+    <div class="auth-box" id="loginBox">
+      <h3>Log-in</h3>
+      <div class="form-group">
+        <label>Username: <span class="req">*</span></label>
+        <div class="input-wrap"><span class="ico"><img src="Person.svg" width="100%" alt="User Icon"/></span>
+          <input type="text" id="loginUser" placeholder="Enter your username"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password: <span class="req">*</span></label> 
+        <div class="input-wrap"><span class="ico"><img src="lock.svg" width="100%" alt="Lock Icon"/></span>
+          <input type="password" id="loginPass" placeholder="Enter your password"/>
+        </div>
+      </div>
+      <div class="err" id="loginErr">Invalid username or password!</div>
+      <div class="auth-links" style="margin-bottom:14px">
+        Don't have an account? <a onclick="toggleAuth('signup')">Sign up here</a><br><br>
+        <a onclick="toggleAuth('forgot')" style="color:var(--muted)">Forgot password?</a>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" style="flex:1" onclick="goTo('splash')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" onclick="handleLogin()">Login</button>
+      </div>
+    </div>
+    <!-- SIGNUP FORM -->
+    <div class="auth-box" id="signupBox" style="display:none">
+      <h3>Sign Up</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name <span class="req">*</span></label>
+          <div class="input-wrap"><span class="ico"><img src="Person.svg" width="100%" alt="User Icon"/></span>
+            <input type="text" id="signupFN" placeholder="Enter your first name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Last Name <span class="req">*</span></label>
+          <div class="input-wrap"><span class="ico"><img src="Person.svg" width="100%" alt="User Icon"/></span>
+            <input type="text" id="signupLN" placeholder="Enter your last name"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Username <span class="req">*</span></label>
+        <div class="input-wrap"><span class="ico"><img src="Person.svg" width="100%" alt="User Icon"/></span>
+          <input type="text" id="signupUser" placeholder="Choose a username"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-wrap"><span class="ico"><img src="email.svg" width="100%" alt="Email Icon"/></span>
+          <input type="email" id="signupEmail" placeholder="Enter your email"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Password <span class="req">*</span></label>
+          <div class="input-wrap"><span class="ico"><img src="lock.svg" width="100%" alt="Lock Icon"/></span>
+            <input type="password" id="signupPass" placeholder="Enter password"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password <span class="req">*</span></label>
+          <div class="input-wrap"><span class="ico"><img src="lock.svg" width="100%" alt="Lock Icon"/></span>
+            <input type="password" id="signupPass2" placeholder="Confirm password"/>
+          </div>
+        </div>
+      </div>
+      <div class="err" id="signupErr"></div>
+      <div class="auth-links" style="margin-bottom:14px">Already have an account? <a onclick="toggleAuth('login')">Login here</a></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" style="flex:1" onclick="toggleAuth('login')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" onclick="handleSignup()">Sign Up</button>
+      </div>
+    </div>
+    <!-- FORGOT PASSWORD -->
+    <div class="auth-box" id="forgotBox" style="display:none">
+      <h3>Reset Password</h3>
+      <div class="form-group">
+        <label>Username <span class="req">*</span></label>
+        <div class="input-wrap"><span class="ico"><img src="Person.svg" width="100%" alt="User Icon"/></span><input type="text" id="resetUser" placeholder="Enter your username"/></div>
+      </div>
+      <div class="form-group">
+        <label>New Password <span class="req">*</span></label>
+        <div class="input-wrap"><span class="ico"><img src="lock.svg" width="100%" alt="Lock Icon"/></span><input type="password" id="resetPass" placeholder="New password"/></div>
+      </div>
+      <div class="form-group">
+        <label>Confirm New Password <span class="req">*</span></label>
+        <div class="input-wrap"><span class="ico"><img src="lock.svg" width="100%" alt="Lock Icon"/></span><input type="password" id="resetPass2" placeholder="Confirm password"/></div>
+      </div>
+      <div class="err" id="resetErr"></div>
+      <div class="auth-links" style="margin-bottom:14px"><a onclick="toggleAuth('login')">Remember your password? Login</a></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" style="flex:1" onclick="toggleAuth('login')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" onclick="handleReset()">Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ USER DASHBOARD ════════════════ -->
+<div id="dashboard" class="page">
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo-area">
+      <img src="localogo.svg" alt="LOCATHINGS Logo" width="32"/>
+    </div>
+    <div class="header-center">
+      <div class="header-logo-text">LOCATHINGS</div>
+      <div class="marquee-wrap"><div class="marquee-inner">Welcome to LOCATHINGS! &nbsp;&nbsp;&nbsp; Report lost or found items easily! &nbsp;&nbsp;&nbsp; Available 24/7 for all students and faculty! &nbsp;&nbsp;&nbsp; Check the directory below to find your item! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
+    </div>
+    <div class="header-right">
+      <button class="profile-btn" id="profileBtn" onclick="openProfile()">?</button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:20px;background:radial-gradient(ellipse at top left,#1d6b35,transparent 50%),linear-gradient(160deg,#0d4a1f,#1a3a24)">
+    <div class="dash-content">
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-num blue" id="sTotalRep">0</div><div class="stat-label">Total Reports</div></div>
+        <div class="stat-card"><div class="stat-num red" id="sLostCount">0</div><div class="stat-label">Lost Item</div></div>
+        <div class="stat-card"><div class="stat-num green" id="sFoundCount">0</div><div class="stat-label">Found Item</div></div>
+      </div>
+      <!-- ACTION -->
+      <div class="action-card">
+        <p>What do you want to do?</p>
+        <div class="action-btns">
+          <button class="btn-lost" onclick="openReportModal('lost')">🔍 I LOST an item</button>
+          <button class="btn-found" onclick="openReportModal('found')">📦 I FOUND an item</button>
+        </div>
+      </div>
+      <!-- SEARCH -->
+      <div class="search-card">
+        <label>Search items</label>
+        <div class="search-row">
+          <div class="input-wrap" style="flex:1">
+            <span class="ico">🔍</span>
+            <input type="text" id="searchQ" placeholder="Type item name or description..." oninput="renderTable()"/>
+          </div>
+          <select id="searchCat" style="padding-left:14px" onchange="renderTable()">
+            <option value="">- All Categories -</option>
+            <option>Bags</option><option>Electronics</option><option>Keys</option>
+            <option>Wallets / IDs</option><option>Clothing</option>
+            <option>Books / Notes</option><option>Jewelry</option><option>Others</option>
+          </select>
+          <button class="btn btn-primary" onclick="renderTable()">Search</button>
+        </div>
+      </div>
+      <!-- TABS -->
+      <div class="tab-row">
+        <button class="tab-pill active" onclick="setTab('all',this)">All items</button>
+        <button class="tab-pill" onclick="setTab('lost',this)">Lost item</button>
+        <button class="tab-pill" onclick="setTab('found',this)">Found item</button>
+      </div>
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Report ID</th><th>Item Name</th><th>Category</th><th>Type</th><th>Location</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="itemTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PROFILE PANEL ════════════════ -->
+<div class="profile-overlay" id="profileOverlay" onclick="closeProfile(event)">
+  <div class="profile-panel" onclick="event.stopPropagation()">
+    <div class="profile-inner">
+      <div class="profile-left">
+        <button onclick="closeProfile()" style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:20px;margin-bottom:10px;align-self:flex-start">←</button>
+        <div class="profile-avatar" id="profAvatar">?</div>
+        <div class="profile-name" id="profName">User</div>
+        <div class="profile-date" id="profDate">--</div>
+        <span class="badge badge-user" id="profRole">user</span>
+        <nav class="profile-nav" style="margin-top:16px">
+          <div class="profile-nav-item active" onclick="switchProfTab('overview',this)"><span>📊</span><span>Overview</span></div>
+          <div class="profile-nav-item" onclick="switchProfTab('reports',this)"><span>📋</span><span>My reports</span></div>
+          <div class="profile-nav-item" onclick="switchProfTab('claimed',this)"><span>✅</span><span>Claimed items</span></div>
+          <div class="profile-nav-item" onclick="switchProfTab('notifications',this)"><span>🔔</span><span>Notifications</span></div>
+          <div class="profile-nav-item" onclick="switchProfTab('settings',this)"><span>⚙️</span><span>Settings</span></div>
+          <div class="profile-nav-item sign-out" style="margin-top:16px" onclick="doLogout()"><span>🚪</span><span>Sign-out</span></div>
+        </nav>
+      </div>
+      <div class="profile-right">
+        <!-- Overview Tab -->
+        <div id="profTab-overview">
+          <h4>Overview</h4>
+          <div class="overview-grid">
+            <div class="overview-box"><div class="num" id="myReported">0</div><div class="lbl">Items reported</div></div>
+            <div class="overview-box"><div class="num" id="myClaimed">0</div><div class="lbl">Items claimed</div></div>
+            <div class="overview-box"><div class="num" id="myPending">0</div><div class="lbl">Pending match</div></div>
+          </div>
+          <h4>Recent Activity</h4>
+          <div class="activity-list" id="myActivity"></div>
+        </div>
+        <!-- My Reports Tab -->
+        <div id="profTab-reports" style="display:none">
+          <h4>My Reports</h4>
+          <div class="table-wrap"><table><thead><tr><th>ID</th><th>Item</th><th>Type</th><th>Status</th></tr></thead><tbody id="myReportsBody"></tbody></table></div>
+        </div>
+        <!-- Claimed Tab -->
+        <div id="profTab-claimed" style="display:none">
+          <h4>Claimed Items</h4>
+          <div class="table-wrap"><table><thead><tr><th>ID</th><th>Item</th><th>Date</th></tr></thead><tbody id="myClaimedBody"></tbody></table></div>
+        </div>
+        <!-- Notifications Tab -->
+        <div id="profTab-notifications" style="display:none">
+          <h4>Notifications</h4>
+          <div id="notifList" class="activity-list"></div>
+        </div>
+        <!-- Settings Tab -->
+        <div id="profTab-settings" style="display:none">
+          <h4>Settings</h4>
+          <div class="form-group"><label>Display Name</label><div class="input-wrap"><span class="ico">👤</span><input type="text" id="settingName" placeholder="Your name"/></div></div>
+          <div class="form-group"><label>Email</label><div class="input-wrap"><span class="ico">📧</span><input type="email" id="settingEmail" placeholder="Your email"/></div></div>
+          <div class="form-group"><label>New Password (leave blank to keep)</label><div class="input-wrap"><span class="ico">🔒</span><input type="password" id="settingPass" placeholder="New password"/></div></div>
+          <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ ADMIN PORTAL ════════════════ -->
+<div id="admin" class="page">
+  <aside class="admin-sidebar">
+    <div class="admin-logo">
+      <svg width="22" height="26" viewBox="0 0 110 130" fill="none"><path d="M55 10C33 10 15 28 15 50C15 78 55 110 55 110C55 110 95 78 95 50C95 28 77 10 55 10Z" fill="#22c55e"/><circle cx="55" cy="46" r="18" fill="white"/><circle cx="52" cy="43" r="8" fill="none" stroke="#16a34a" stroke-width="3"/><line x1="57" y1="49" x2="63" y2="55" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/></svg>
+      <span class="admin-logo-text">LOCATHINGS</span>
+    </div>
+    <div class="admin-nav-label">Main</div>
+    <button class="admin-nav-item active" onclick="adminNav('adash',this)"><span class="ico">📊</span><span>Dashboard</span></button>
+    <button class="admin-nav-item" onclick="adminNav('aitems',this)"><span class="ico">📦</span><span>Items</span></button>
+    <button class="admin-nav-item" onclick="adminNav('ausers',this)"><span class="ico">👥</span><span>Users</span></button>
+    <button class="admin-nav-item" onclick="adminNav('aclaims',this)"><span class="ico">✅</span><span>Claims</span></button>
+    <div class="admin-nav-label">Account</div>
+    <button class="admin-nav-item" onclick="doLogout()"><span class="ico">🚪</span><span>Logout</span></button>
+  </aside>
+  <main class="admin-main">
+    <!-- Admin Dashboard -->
+    <div class="admin-section active" id="adash">
+      <div class="admin-header">
+        <h2>Admin Dashboard</h2>
+        <span class="badge badge-admin">Admin Portal</span>
+      </div>
+      <div class="admin-stats">
+        <div class="a-stat"><div class="a-stat-num" id="a-total" style="color:#60a5fa">0</div><div class="a-stat-label">Total Items</div></div>
+        <div class="a-stat"><div class="a-stat-num" id="a-lost" style="color:#f87171">0</div><div class="a-stat-label">Lost Items</div></div>
+        <div class="a-stat"><div class="a-stat-num" id="a-found" style="color:#4ade80">0</div><div class="a-stat-label">Found Items</div></div>
+        <div class="a-stat"><div class="a-stat-num" id="a-users" style="color:#c084fc">0</div><div class="a-stat-label">Registered Users</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-toolbar"><h4>Recent Reports</h4><span class="badge badge-admin">Latest 10</span></div>
+        <div style="overflow-x:auto"><table><thead><tr><th>Report ID</th><th>Item Name</th><th>Category</th><th>Type</th><th>Location</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminRecentBody"></tbody></table></div>
+      </div>
+    </div>
+    <!-- Admin Items -->
+    <div class="admin-section" id="aitems">
+      <div class="admin-header">
+        <h2>Manage Items</h2>
+        <button class="btn btn-primary btn-sm" onclick="openReportModal('lost')">+ Add Item</button>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+        <div class="input-wrap" style="flex:1;min-width:200px"><span class="ico">🔍</span><input type="text" id="adminSearchQ" placeholder="Search items..." oninput="renderAdminItems()"/></div>
+        <select id="adminFilterType" style="padding-left:14px;min-width:140px" onchange="renderAdminItems()"><option value="">All Types</option><option value="lost">Lost</option><option value="found">Found</option></select>
+        <select id="adminFilterStatus" style="padding-left:14px;min-width:140px" onchange="renderAdminItems()"><option value="">All Status</option><option value="active">Active</option><option value="claimed">Claimed</option></select>
+      </div>
+      <div class="table-card">
+        <div style="overflow-x:auto"><table><thead><tr><th>Report ID</th><th>Item Name</th><th>Category</th><th>Type</th><th>Reporter</th><th>Location</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminItemsBody"></tbody></table></div>
+      </div>
+    </div>
+    <!-- Admin Users -->
+    <div class="admin-section" id="ausers">
+      <div class="admin-header"><h2>Manage Users</h2><span class="badge badge-admin">Total: <span id="userCount">0</span></span></div>
+      <div class="table-card">
+        <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Name</th><th>Username</th><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead><tbody id="adminUsersBody"></tbody></table></div>
+      </div>
+    </div>
+    <!-- Admin Claims -->
+    <div class="admin-section" id="aclaims">
+      <div class="admin-header"><h2>Manage Claims</h2></div>
+      <div class="table-card">
+        <div style="overflow-x:auto"><table><thead><tr><th>Item ID</th><th>Item Name</th><th>Type</th><th>Claimed By</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminClaimsBody"></tbody></table></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ════════════════ REPORT MODAL ════════════════ -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('reportModal')">✕</button>
+    <h3 id="reportModalTitle">Report a Lost Item</h3>
+    <div id="reportForm">
+      <input type="hidden" id="fType"/>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Item Name <span class="req">*</span></label>
+          <div class="input-wrap"><span class="ico">📦</span><input type="text" id="fName" placeholder="e.g. Black Wallet"/></div>
+        </div>
+        <div class="form-group">
+          <label>Category <span class="req">*</span></label>
+          <select id="fCat" style="padding-left:14px">
+            <option value="">-- Select --</option>
+            <option>Bags</option><option>Electronics</option><option>Keys</option>
+            <option>Wallets / IDs</option><option>Clothing</option>
+            <option>Books / Notes</option><option>Jewelry</option><option>Others</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description <span class="req">*</span></label>
+        <textarea id="fDesc" style="padding-left:14px;min-height:80px" placeholder="Describe the item in detail..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Location <span class="req">*</span></label>
+          <div class="input-wrap"><span class="ico">📍</span><input type="text" id="fLoc" placeholder="e.g. Library 2nd Floor"/></div>
+        </div>
+        <div class="form-group">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" id="fDate" style="padding-left:14px"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Name <span class="req">*</span></label>
+        <div class="input-wrap"><span class="ico">👤</span><input type="text" id="fReporter" placeholder="Full name"/></div>
+      </div>
+      <div class="err" id="reportErr"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('reportModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitReport()">Submit Report</button>
+      </div>
+    </div>
+    <div class="confirm-box" id="reportConfirm">
+      <div style="font-size:28px;margin-bottom:8px">✅</div>
+      <div style="font-weight:700;font-size:16px;color:#4ade80;margin-bottom:4px">Report Submitted!</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Your Report ID is:</div>
+      <div class="report-id" id="reportIdDisplay"></div>
+      <div style="font-size:12px;color:var(--muted)">Save this ID to track your item.</div>
+      <button class="btn btn-ghost" style="margin-top:16px" onclick="closeModal('reportModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ ITEM DETAIL MODAL ════════════════ -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+    <h3>Item Details</h3>
+    <div class="detail-rows" id="detailRows"></div>
+    <div class="modal-actions" id="detailActions"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="toastIcon">✅</span><span id="toastMsg">Done!</span></div>
+
+<script src="project.js"></script>
+</body>
+</html>
