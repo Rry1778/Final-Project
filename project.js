@@ -1,8 +1,3 @@
-// ════════════════════════════════════════════════════════════════════
-// LOCATHINGS - Lost and Found Management System
-// Main JavaScript File - Organized by Functionality
-// ════════════════════════════════════════════════════════════════════
-
 // ════════════════ DATA STORE ════════════════════════════════════════
 const STORE = {
   get(k) { try { return JSON.parse(localStorage.getItem(k) || 'null') } catch (e) { return null } },
